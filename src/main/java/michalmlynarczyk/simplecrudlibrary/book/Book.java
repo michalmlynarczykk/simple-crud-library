@@ -5,16 +5,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="book")
+@Entity(name = "book")
 public class Book {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private String authorFirstName;
     private String authorLastName;
     private int publicationYear;
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String title, String authorFirstName, String authorLastName, int publicationYear) {
         this.title = title;
