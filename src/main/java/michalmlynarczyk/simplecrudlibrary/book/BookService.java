@@ -3,7 +3,7 @@ package michalmlynarczyk.simplecrudlibrary.book;
 import java.util.List;
 
 public interface BookService {
-    void saveBook(Book book);
+    Book saveBook(Book book);
     List<Book> getAllBooks();
     List<Book> getBooksByAuthor(String firstName, String lastName);
     Book getBookById(Long id);
