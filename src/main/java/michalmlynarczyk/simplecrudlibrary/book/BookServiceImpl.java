@@ -49,23 +49,46 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void updateBook(Long id, String title) {
+    public void updateBook(Long id, Book book) {
         Book bookToUpdate = bookRepository.findById(id).orElseThrow(() -> {
-            log.error("Book to update not found");
+            log.error("Book {} not found", id);
             return new IllegalStateException(String.format("Book with id: %d not found", id));
         });
-        if (title != null &&
-                title.length() > 0
-                && !title.equals(bookToUpdate.getTitle())) {
-            bookToUpdate.setTitle(title);
-            log.info("Book with id: {} updated successfully",id);
+        if (book.getTitle() != null &&
+                !book.getTitle().isEmpty() &&
+                !book.getTitle().equals(bookToUpdate.getTitle())) {
+            log.info("Title changed from {} to {}", book.getTitle(), bookToUpdate.getTitle());
+            bookToUpdate.setTitle(book.getTitle());
+        }
+        if (book.getAuthorFirstName() != null &&
+                !book.getAuthorFirstName().isEmpty() &&
+                !book.getAuthorFirstName().equals(bookToUpdate.getAuthorFirstName())) {
+            log.info("Author first name changed from {} to {}",
+                    book.getAuthorFirstName(),
+                    bookToUpdate.getAuthorFirstName());
+            bookToUpdate.setAuthorFirstName(book.getAuthorFirstName());
+        }
+        if (book.getAuthorLastName() != null &&
+                !book.getAuthorLastName().isEmpty() &&
+                !book.getAuthorLastName().equals(bookToUpdate.getAuthorLastName())) {
+            log.info("Author last name changed from {} to {}",
+                    book.getAuthorLastName(),
+                    bookToUpdate.getAuthorLastName());
+            bookToUpdate.setAuthorLastName(book.getAuthorLastName());
+        }
+        if (!(book.getPublicationYear() == 0) &&
+                !(book.getPublicationYear() == bookToUpdate.getPublicationYear())) {
+            log.info("Publication year changed from {} to {}",
+                    book.getPublicationYear(),
+                    bookToUpdate.getPublicationYear());
+            bookToUpdate.setPublicationYear(book.getPublicationYear());
         }
     }
 
     @Override
     public void deleteBookById(Long id) {
         if (bookRepository.existsById(id)) {
-            log.info("Deleting book with id: {}",id);
+            log.info("Deleting book with id: {}", id);
             bookRepository.deleteById(id);
         } else {
             throw new IllegalStateException(String.format("Book with id: %d not found", id));
