@@ -57,30 +57,32 @@ public class BookServiceImpl implements BookService {
         if (book.getTitle() != null &&
                 !book.getTitle().isEmpty() &&
                 !book.getTitle().equals(bookToUpdate.getTitle())) {
-            log.info("Title changed from {} to {}", book.getTitle(), bookToUpdate.getTitle());
+            log.info("Title changed from {} to {}",
+                    bookToUpdate.getTitle(),
+                    book.getTitle());
             bookToUpdate.setTitle(book.getTitle());
         }
         if (book.getAuthorFirstName() != null &&
                 !book.getAuthorFirstName().isEmpty() &&
                 !book.getAuthorFirstName().equals(bookToUpdate.getAuthorFirstName())) {
             log.info("Author first name changed from {} to {}",
-                    book.getAuthorFirstName(),
-                    bookToUpdate.getAuthorFirstName());
+                    bookToUpdate.getAuthorFirstName(),
+                    book.getAuthorFirstName());
             bookToUpdate.setAuthorFirstName(book.getAuthorFirstName());
         }
         if (book.getAuthorLastName() != null &&
                 !book.getAuthorLastName().isEmpty() &&
                 !book.getAuthorLastName().equals(bookToUpdate.getAuthorLastName())) {
             log.info("Author last name changed from {} to {}",
-                    book.getAuthorLastName(),
-                    bookToUpdate.getAuthorLastName());
+                    bookToUpdate.getAuthorLastName(),
+                    book.getAuthorLastName());
             bookToUpdate.setAuthorLastName(book.getAuthorLastName());
         }
         if (!(book.getPublicationYear() == 0) &&
                 !(book.getPublicationYear() == bookToUpdate.getPublicationYear())) {
             log.info("Publication year changed from {} to {}",
-                    book.getPublicationYear(),
-                    bookToUpdate.getPublicationYear());
+                    bookToUpdate.getPublicationYear(),
+                    book.getPublicationYear());
             bookToUpdate.setPublicationYear(book.getPublicationYear());
         }
     }
