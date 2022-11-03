@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Entity(name="book")
 public class Book {
@@ -13,23 +12,23 @@ public class Book {
     private String title;
     private String authorFirstName;
     private String authorLastName;
-    private LocalDate publicationDate;
+    private int publicationYear;
 
     public Book() {}
 
-    public Book(String title, String authorFirstName, String authorLastName, LocalDate publicationDate) {
+    public Book(String title, String authorFirstName, String authorLastName, int publicationYear) {
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
-        this.publicationDate = publicationDate;
+        this.publicationYear = publicationYear;
     }
 
-    public LocalDate getPublicationDate() {
-        return publicationDate;
+    public int getPublicationYear() {
+        return publicationYear;
     }
 
-    public void setPublicationDate(LocalDate dateOfRelease) {
-        this.publicationDate = dateOfRelease;
+    public void setPublicationYear(int dateOfRelease) {
+        this.publicationYear = dateOfRelease;
     }
 
     public Long getId() {
