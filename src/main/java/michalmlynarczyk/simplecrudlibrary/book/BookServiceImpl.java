@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -19,6 +20,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book saveBook(Book book) {
+        if (book.getTitle() == null ||
+                book.getTitle().isEmpty() ||
+                book.getAuthorFirstName() == null ||
+                book.getAuthorFirstName().isEmpty() ||
+                book.getAuthorLastName() == null ||
+                book.getAuthorLastName().isEmpty() ||
+                book.getPublicationYear() == 0) {
+            throw new IllegalStateException("Cannot save book, missing data");
+        }
         log.info("Saving book {} to database", book.getTitle());
         return bookRepository.save(book);
     }
@@ -32,18 +42,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> getBooksByAuthor(String firstName, String lastName) {
         log.info("Searching for books written by author: {} {}", firstName, lastName);
-        return bookRepository.findByAuthorFirstNameAndAuthorLastName(firstName, lastName)
-                .orElseThrow(() -> {
-                    log.error("Books searched by author not found");
-                    return new IllegalStateException(String.format("Books written by: %s %s not found", firstName, lastName));
-                });
+        List<Book> books = bookRepository.findByAuthorFirstNameAndAuthorLastName(firstName, lastName);
+        if (books.isEmpty()) {
+            log.error("Books searched by author not found");
+            throw new EntityNotFoundException(String.format("Books written by: %s %s not found", firstName, lastName));
+        }
+        return books;
     }
 
     @Override
     public Book getBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(() -> {
             log.error("Book searched by Id not found");
-            return new IllegalStateException(String.format("Book with id: %d not found", id));
+            return new EntityNotFoundException(String.format("Book with id: %d not found", id));
         });
     }
 
@@ -52,7 +63,7 @@ public class BookServiceImpl implements BookService {
     public void updateBook(Long id, Book book) {
         Book bookToUpdate = bookRepository.findById(id).orElseThrow(() -> {
             log.error("Book {} not found", id);
-            return new IllegalStateException(String.format("Book with id: %d not found", id));
+            return new EntityNotFoundException(String.format("Book with id: %d not found", id));
         });
         if (book.getTitle() != null &&
                 !book.getTitle().isEmpty() &&
@@ -93,7 +104,7 @@ public class BookServiceImpl implements BookService {
             log.info("Deleting book with id: {}", id);
             bookRepository.deleteById(id);
         } else {
-            throw new IllegalStateException(String.format("Book with id: %d not found", id));
+            throw new EntityNotFoundException(String.format("Book with id: %d not found", id));
         }
     }
 }
