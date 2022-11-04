@@ -24,12 +24,12 @@ public class BookController {
         return ResponseEntity.ok().body(books);
     }
 
-    @PostMapping("/books/save")
+    @PostMapping("/books")
     public ResponseEntity<Book> saveBook(
             @RequestBody Book book) {
 
         URI uri = URI.create(ServletUriComponentsBuilder
-                .fromCurrentContextPath().path("/api/books/save")
+                .fromCurrentContextPath().path("/api/books")
                 .toUriString());
         return ResponseEntity.created(uri).body(bookService.saveBook(book));
     }
