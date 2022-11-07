@@ -53,38 +53,6 @@ class BookServiceImplTest {
     }
 
     @Test
-    void shouldNotSaveBookWhenOneOfArgumentsIsNull() {
-        //given
-        Book book = new Book(
-                "Test title",
-                "John",
-                null,
-                1992);
-
-        //when
-        //then
-        assertThatThrownBy(() -> underTest.saveBook(book))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Cannot save book, missing data");
-    }
-
-    @Test
-    void shouldNotSaveBookWhenOneOfArgumentsIsEmpty() {
-        //given
-        Book book = new Book(
-                "",
-                "John",
-                "Doe",
-                1992);
-
-        //when
-        //then
-        assertThatThrownBy(() -> underTest.saveBook(book))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("Cannot save book, missing data");
-    }
-
-    @Test
     void shouldGetAllBooks() {
         //given
         List<Book> books = List.of(
