@@ -20,15 +20,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book saveBook(Book book) {
-        if (book.getTitle() == null ||
-                book.getTitle().isEmpty() ||
-                book.getAuthorFirstName() == null ||
-                book.getAuthorFirstName().isEmpty() ||
-                book.getAuthorLastName() == null ||
-                book.getAuthorLastName().isEmpty() ||
-                book.getPublicationYear() == 0) {
-            throw new IllegalStateException("Cannot save book, missing data");
-        }
         log.info("Saving book {} to database", book.getTitle());
         return bookRepository.save(book);
     }
