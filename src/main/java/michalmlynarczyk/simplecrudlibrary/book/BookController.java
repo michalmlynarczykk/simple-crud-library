@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -26,8 +27,7 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<Book> saveBook(
-            @RequestBody Book book) {
-
+            @Valid @RequestBody Book book) {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/api/books")
                 .toUriString());
@@ -38,7 +38,6 @@ public class BookController {
     public ResponseEntity<List<Book>> getAllBooksByAuthor(
             @RequestParam("first-name") String firstName,
             @RequestParam("last-name") String lastName) {
-
         return ResponseEntity.ok(bookService.getBooksByAuthor(firstName, lastName));
     }
 
