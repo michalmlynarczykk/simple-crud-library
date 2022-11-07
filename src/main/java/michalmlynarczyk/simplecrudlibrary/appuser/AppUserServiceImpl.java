@@ -1,7 +1,6 @@
 package michalmlynarczyk.simplecrudlibrary.appuser;
 
 import lombok.extern.slf4j.Slf4j;
-import michalmlynarczyk.simplecrudlibrary.exceptions.AlreadyExistsException;
 import michalmlynarczyk.simplecrudlibrary.role.Role;
 import michalmlynarczyk.simplecrudlibrary.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +38,6 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     @Override
     public AppUser saveUser(AppUser user) {
         log.info("Saving user {} to database", user.getUsername());
-        if (appUserRepository
-                .findByUsername(user.getUsername())
-                .isPresent()) {
-            log.error("User with username: {} already exists",user.getUsername());
-            throw new AlreadyExistsException(String.format("User with username: %s already exists",user.getUsername()));
-        }
         return appUserRepository.save(user);
     }
 
@@ -69,7 +62,9 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
                     log.error("User with username: {} not found",username);
                     return new EntityNotFoundException(String.format("User with username: %s not found",username));
                 });
-        Role role = roleRepository.findRoleByName(roleName).orElseThrow(() ->{
+        Role role = roleRepository
+                .findRoleByName(roleName)
+                .orElseThrow(() ->{
             log.error("Role with name: {} not found",roleName);
             return new EntityNotFoundException(String.format("Role with name: %s not found",roleName));
         });
