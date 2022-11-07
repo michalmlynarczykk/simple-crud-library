@@ -1,6 +1,6 @@
 # Simple CRUD library
 This project is a simple REST API for a library that I have created using Spring Boot. It could perform create, read, update, and delete actions on the MySQL database.
-While building this project I decided to also add basic authentication (role-based) using Spring Security. Tests for the application were written in BDD style.
+While building this project I decided to add basic authentication (role-based) using Spring Security. Tests for the application were written in BDD style.
 
 ## Technologies used for this project
 - Java 17
@@ -20,7 +20,7 @@ While building this project I decided to also add basic authentication (role-bas
 - Postman 
 
 In MySQL create the database with the name "library", default name and password are set to "root" and "password" if you would like to change it, go to:
-*src/main/resources/application.properties* and change this two fields: *spring.datasource.username* *spring.datasource.password*. 
+*src/main/resources/application.properties* and change this two fields: *spring.datasource.username* and *spring.datasource.password*. 
 
 Now using Postman you could play around with API. By default this application has two users:
 - reader (username = "reader" password = "password")
